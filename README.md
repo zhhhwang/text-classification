@@ -1,7 +1,7 @@
-kaggle-fake-news
+text-classification
 ==============================
 
-kaggle fake news competition
+Text classification project for kaggle fake news and amazon reviews. 
 
 Project Organization
 ------------
