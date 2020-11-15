@@ -6,7 +6,7 @@ from tests import sample_data
 def test_pandas_merge_column():
     test_data = pd.DataFrame({'text1': ['a', 'b'], 'text2': ['c', 'd'], 'numeric': [1, 2]})
 
-    test_data_result = make_dataset.merge_column(test_data, ['text1', 'text2'])
+    test_data_result = make_dataset.merge_column(test_data, ['text1', 'text2'], 'text')
 
     # Check if text1 is removed
     try:

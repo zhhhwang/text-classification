@@ -4,19 +4,30 @@ import numpy as np
 import logging
 
 
-def tokenize_text(data, max_feature, max_len):
+def create_tokenizer_from_text(data, max_feature):
     """
-    representing each word by a number
+    Representing each word by a number
     :param data: A list of sentence
     :param max_feature: The number of most frequent words to keep
-    :param max_len: Keep all the sample to have same length
     :return: Return the tokenizer and
     """
     logging.info("Creating text tokenizer.")
     tokenizer = Tokenizer(num_words=max_feature)
     tokenizer.fit_on_texts(data)
-    tokenized_train = tokenizer.texts_to_sequences(data)
-    return tokenizer, sequence.pad_sequences(tokenized_train, maxlen=max_len)
+
+    return tokenizer
+
+
+def create_text_sequence(data, tokenizer, max_len):
+    """
+    Use the trained
+    :param data: A list of sentence
+    :param tokenizer:
+    :param max_len:
+    :return:
+    """
+    tokenized_data = tokenizer.texts_to_sequences(data)
+    return sequence.pad_sequences(tokenized_data, maxlen=max_len)
 
 
 def get_embedding_word(word, *arr):

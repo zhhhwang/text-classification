@@ -1,6 +1,5 @@
 import pandas as pd
 import logging
-from text_classification.config import constants
 
 
 def get_fake_news_data(data_dir):
