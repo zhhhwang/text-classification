@@ -4,6 +4,7 @@ import logging
 from nltk.corpus import stopwords
 import string
 
+
 def merge_column(data, col_list, new_name):
     """
     Merge the designated column and create a new column containing all text info
@@ -41,7 +42,7 @@ def remove_between_square_brackets(text):
     :param text: text containing square brackets
     :return: text removed square brackets
     """
-    return re.sub('\[[^]]*\]', '', text)
+    return re.sub(r'\[[^]]*\]', '', text)
 
 
 def remove_url(text):

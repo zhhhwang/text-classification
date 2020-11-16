@@ -20,4 +20,3 @@ def get_fake_news_data(data_dir):
     logging.info("Reading the dataset as of shape " + str(df.shape))
 
     return df
-
