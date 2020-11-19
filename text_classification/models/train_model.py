@@ -3,7 +3,6 @@ from text_classification.config import fake_news_model_config
 import keras
 from keras import Sequential
 from keras.layers import Dense, Embedding, LSTM
-from sklearn.metrics import confusion_matrix
 
 import logging
 
