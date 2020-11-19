@@ -20,3 +20,16 @@ def get_fake_news_data(data_dir):
     logging.info("Reading the dataset as of shape " + str(df.shape))
 
     return df
+
+
+def get_amazon_review_data(data_dir):
+    """
+    Getting the data for the Amazon Review Project.
+    :param data_dir:
+    :return: Dataframe
+    """
+    df = pd.read_csv(data_dir + '/Reviews_small.csv')
+    df = df[['Score', 'Summary', 'Text']]
+    logging.info("Reading the dataset as of shape " + str(df.shape))
+
+    return df
