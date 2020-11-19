@@ -3,6 +3,7 @@ from text_classification.config import constants
 from text_classification.data import make_dataset
 from text_classification.features import build_features
 from text_classification.models import train_model
+from text_classification.models import predict_model
 
 from text_classification.config import fake_news_model_config
 
@@ -54,6 +55,7 @@ def kaggle_fake_news_classification():
                                           y_train,
                                           x_test,
                                           y_test)
+    _ = predict_model.get_confusion_matrix(lstm_model.predict_classes(x_test), y_test)
 
 
 if __name__ == '__main__':

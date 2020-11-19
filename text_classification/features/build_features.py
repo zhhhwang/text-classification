@@ -1,5 +1,7 @@
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
+from keras.utils import np_utils
+from sklearn.preprocessing import LabelEncoder
 import numpy as np
 import logging
 
@@ -81,3 +83,16 @@ def get_embedding_matrix(embeddings_index,
 
     logging.info("Embedding matrix created.")
     return embedding_matrix
+
+
+def get_one_hot_encoding(data):
+    """
+    Create one hot encoder for label
+    :param data:
+    :return:
+    """
+    encoder = LabelEncoder()
+    encoder.fit(data)
+    encoded_data = encoder.transform(data)
+
+    return np_utils.to_categorical(encoded_data)
