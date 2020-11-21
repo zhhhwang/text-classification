@@ -64,7 +64,7 @@ def remove_stopwords(text, stop_words):
     final_text = []
     for i in text.split():
         if i.strip().lower() not in stop_words:
-            final_text.append(i.strip())
+            final_text.append(i.strip().lower())
     return " ".join(final_text)
 
 
