@@ -4,7 +4,6 @@ from text_classification.utils import model_utils
 LOCAL_DATASETS_DIR = model_utils.get_root_directory() + '/data'
 
 # Datasets
-FAKE_NEWS_DATA_DIR = LOCAL_DATASETS_DIR + '/interim/'
 AMAZON_REVIEW_DATA_DIR = LOCAL_DATASETS_DIR + '/interim/'
 EMBEDDING_FILE_DIR = LOCAL_DATASETS_DIR + '/external/'
 
