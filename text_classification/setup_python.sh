@@ -6,9 +6,9 @@ S3_GLOVE_DATA_LOCATION=""
 aws s3 cp $S3_DATA_LOCATION data/interim
 aws s3 cp $S3_GLOVE_DATA_LOCATION data/external
 
-head -100000 data/interim/Reviews.csv > Reviews_small.csv
+head -100000 data/interim/Reviews.csv > data/interim/Reviews_small.csv
 unzip data/external/glove
 
 # For setting up python
-pip3 install -r requirement.txt
+pip3 install -r requirements.txt
 python3 -m nltk.downloader all
