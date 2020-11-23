@@ -1,7 +1,7 @@
 from text_classification.config import amazon_review_model_config
 import keras
 from keras import Sequential
-from keras.layers import Dense, Embedding, LSTM
+from keras.layers import Dense, Embedding, LSTM, Bidirectional
 
 import logging
 
@@ -27,14 +27,15 @@ def create_amazon_review_model(embedding_matrix,
                         trainable=False))
 
     # LSTM Model
-    model.add(LSTM(units=128, return_sequences=True, recurrent_dropout=0.25, dropout=0.25))
-    model.add(LSTM(units=64, recurrent_dropout=0.1, dropout=0.1))
+    model.add(Bidirectional(LSTM(units=128, return_sequences=True, recurrent_dropout=0.25, dropout=0.25)))
+    model.add(Bidirectional(LSTM(units=64, recurrent_dropout=0.1, dropout=0.1)))
     model.add(Dense(units=32, activation='relu'))
     model.add(Dense(5, activation='softmax'))
     model.compile(optimizer=keras.optimizers.Adam(lr=amazon_review_model_config.LEARNING_RATE),
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
+    logging.info(model.summary())
     return model
 
 
