@@ -34,4 +34,4 @@ def get_common_words(counter, n=10):
     if n > 0:
         return counter.most_common(n)
     else:
-        return counter.most_common()[:-n - 1:-1]
+        return counter.most_common()[:n - 1:-1]
