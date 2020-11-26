@@ -4,6 +4,7 @@ from text_classification.data import make_dataset
 from text_classification.features import build_features
 from text_classification.models import train_model
 from text_classification.models import predict_model
+from text_classification.utils import model_utils
 
 from text_classification.config import amazon_review_model_config
 
@@ -33,30 +34,31 @@ def amazon_review_classification():
     df['content'] = df['content'].apply(make_dataset.denoise_text)
     logging.info("Text denoising completed.")
 
+    # The following words have low frequency, please consider replacing them when necessary.
+    model_utils.get_common_words(model_utils.get_word_frequency(df.content), -10)
+    feature_count = model_utils.get_content_summary(df.content,
+                                                    build_features.get_glove_embedding_coef(amazon_review_model_config.EMBEDDING_FILE),
+                                                    least_common=50)
+    content_word_count = model_utils.get_content_length_summary(df.content)
+
     # Split training and testing
     x_train, x_test, y_train, y_test = train_test_split(df.content, df.Score, random_state=0)
 
     # Text tokenizing and sequencing
-    tokenizer = build_features.create_tokenizer_from_text(x_train, amazon_review_model_config.MAX_FEATURES)
-    x_train = build_features.create_text_sequence(x_train, tokenizer, amazon_review_model_config.MAX_LEN)
-    x_test = build_features.create_text_sequence(x_test, tokenizer, amazon_review_model_config.MAX_LEN)
+    tokenizer = build_features.create_tokenizer_from_text(x_train, feature_count)
+    x_train = build_features.create_text_sequence(x_train, tokenizer, content_word_count)
+    x_test = build_features.create_text_sequence(x_test, tokenizer, content_word_count)
     y_train = build_features.get_one_hot_encoding(y_train)
     y_test = build_features.get_one_hot_encoding(y_test)
 
     # Getting glove embedding matrix
     embedding_matrix = build_features.get_embedding_matrix(build_features.get_glove_embedding_coef(amazon_review_model_config.EMBEDDING_FILE),
                                                            tokenizer,
-                                                           amazon_review_model_config.MAX_FEATURES)
+                                                           feature_count)
 
     # Create and train the model
-    lstm_model = train_model.create_amazon_review_model(embedding_matrix,
-                                                        amazon_review_model_config.MAX_FEATURES,
-                                                        amazon_review_model_config.MAX_LEN)
-    _ = train_model.train_amazon_review_model(lstm_model,
-                                              x_train,
-                                              y_train,
-                                              x_test,
-                                              y_test)
+    lstm_model = train_model.create_lstm_classification_model(embedding_matrix, feature_count, content_word_count)
+    _ = train_model.train_model(lstm_model, x_train, y_train, x_test, y_test)
     _ = predict_model.get_confusion_matrix(lstm_model.predict_classes(x_test), np.argmax(y_test, axis=1))
 
 

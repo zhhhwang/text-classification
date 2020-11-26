@@ -2,8 +2,6 @@ from keras.callbacks import ReduceLROnPlateau
 from text_classification.config import constants
 
 # Data feature
-MAX_FEATURES = 10000
-MAX_LEN = 300
 EMBEDDING_FILE = constants.EMBEDDING_FILE_DIR + 'glove.twitter.27B.100d.txt'
 
 # Model Params
