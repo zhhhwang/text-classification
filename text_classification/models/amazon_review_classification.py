@@ -57,7 +57,7 @@ def amazon_review_classification():
                                                            feature_count)
 
     # Create and train the model
-    lstm_model = train_model.create_lstm_classification_model(embedding_matrix, feature_count, content_word_count)
+    lstm_model = train_model.create_lstm_classification_model(embedding_matrix, len(tokenizer.word_index), content_word_count)
     _ = train_model.train_model(lstm_model, x_train, y_train, x_test, y_test)
     _ = predict_model.get_confusion_matrix(lstm_model.predict_classes(x_test), np.argmax(y_test, axis=1))
 
