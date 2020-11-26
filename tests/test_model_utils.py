@@ -19,10 +19,10 @@ def test_get_word_frequency():
 
 
 def test_get_common_words():
-    test_data = {'test_text': ['this', 'this', 'this', 'is', 'is', 'a', 'test']}
+    test_data = {'test_text': ['this is a', 'this is', 'this', 'is', 'test']}
     test_pd_df = pd.DataFrame(data=test_data)
     test_count = model_utils.get_word_frequency(test_pd_df.test_text)
-    expect_most_common = [('this', 3), ('is', 2)]
+    expect_most_common = [('this', 3), ('is', 3)]
     expect_least_common = [('a', 1), ('test', 1)]
 
     assert all([i in model_utils.get_common_words(test_count, -2) for i in expect_least_common])
