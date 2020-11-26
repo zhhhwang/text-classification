@@ -90,4 +90,4 @@ def get_content_length_summary(content):
     result = content.apply(lambda x: len(x.split())).describe()
     print(result)
 
-    return int(np.ceil(result['75%']))
+    return int(np.ceil(result['75%']) * 1.2)
