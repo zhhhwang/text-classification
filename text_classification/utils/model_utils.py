@@ -77,7 +77,7 @@ def get_content_summary(content, embedding, least_common=20):
     if least_common is not None:
         print(pd.DataFrame([uncovered_words]).T.reset_index().sort_values(by=0, ascending=False).head(least_common))
 
-    return count
+    return len(uncovered_words) + len(covered_words)
 
 
 def get_content_length_summary(content):
@@ -90,4 +90,4 @@ def get_content_length_summary(content):
     result = content.apply(lambda x: len(x.split())).describe()
     print(result)
 
-    return int(np.ceil(result['50%']))
+    return int(np.ceil(result['75%']))
