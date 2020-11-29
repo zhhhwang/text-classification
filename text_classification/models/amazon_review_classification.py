@@ -49,6 +49,7 @@ def amazon_review_classification():
                                         content_word_count)  # LSTM Classification
     glove_embedding_lstm_regression(x_train, x_test, y_train, y_test, feature_count,
                                     content_word_count)  # LSTM Regression
+    bert_classification_model(x_train, x_test, y_train, y_test, content_word_count)  # BERT Classification
 
 
 def glove_embedding_lstm_classification(x_train, x_test, y_train, y_test, feature_count, content_word_count):
@@ -116,6 +117,33 @@ def glove_embedding_lstm_regression(x_train, x_test, y_train, y_test, feature_co
     print("Accuracy of the model on Testing Data is - ", lstm_model.evaluate(x_test, y_test))
 
     return lstm_model
+
+
+def bert_classification_model(x_train, x_test, y_train, y_test, content_word_count):
+    """
+    Create and train bert model
+    :param x_train:
+    :param x_test:
+    :param y_train:
+    :param y_test:
+    :param content_word_count:
+    :return:
+    """
+    ids_train, masks_train, token_ids_train = train_model.create_bert_encoding(x_train, max_len=content_word_count)
+    ids_test, masks_test, token_ids_test = train_model.create_bert_encoding(x_test, max_len=content_word_count)
+    labels_train = build_features.get_one_hot_encoding(y_train)
+    labels_test = build_features.get_one_hot_encoding(y_test)
+
+    bert_model = train_model.create_bert_model(max_len=content_word_count)
+
+    _ = train_model.train_bert_model(bert_model,
+                                     (ids_train, masks_train, token_ids_train),
+                                     labels_train,
+                                     (ids_test, masks_test, token_ids_test),
+                                     labels_test)
+    print("Accuracy of the model on Training Data is - ", bert_model.evaluate((ids_train, masks_train, token_ids_train), labels_train)[1] * 100, "%")
+    print("Accuracy of the model on Testing Data is - ", bert_model.evaluate((ids_test, masks_test, token_ids_test), labels_test)[1] * 100, "%")
+    _ = predict_model.get_confusion_matrix(bert_model.predict_classes((ids_test, masks_test, token_ids_test)), np.argmax(y_test, axis=1))
 
 
 if __name__ == '__main__':
