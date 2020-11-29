@@ -25,13 +25,13 @@ classification_early_stopping = EarlyStopping(monitor='val_accuracy',
                                               mode='auto')
 
 # Call Backs
-regression_learning_rate_reduction = ReduceLROnPlateau(monitor='val_accuracy',
+regression_learning_rate_reduction = ReduceLROnPlateau(monitor='val_root_mean_squared_error',
                                                        patience=2,
                                                        verbose=1,
                                                        factor=0.5,
                                                        min_lr=0.000001)
 
-regression_early_stopping = EarlyStopping(monitor='val_accuracy',
+regression_early_stopping = EarlyStopping(monitor='val_root_mean_squared_error',
                                           min_delta=0,
                                           patience=3,
                                           verbose=1,
