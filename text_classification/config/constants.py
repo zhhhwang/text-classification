@@ -10,3 +10,6 @@ EMBEDDING_FILE_DIR = LOCAL_DATASETS_DIR + '/external/'
 # Glove Vec dataset url
 GLOVE_WIKI = 'http://nlp.stanford.edu/data/glove.6B.zip'
 GLOVE_TWITTER = 'http://nlp.stanford.edu/data/glove.twitter.27B.zip'
+
+# log file directory
+LOG_FILE = model_utils.get_root_directory() + '/reports/debug.log'

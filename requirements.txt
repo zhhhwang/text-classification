@@ -13,6 +13,8 @@ setuptools
 pytest
 keras
 tensorflow
+tensorflow_hub
+transformers
 scikit-learn
 mlflow
 nltk

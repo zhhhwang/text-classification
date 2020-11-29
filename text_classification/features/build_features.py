@@ -53,13 +53,11 @@ def get_glove_embedding_coef(embedding_file):
 
 
 def get_embedding_matrix(embeddings_index,
-                         tokenizer,
-                         max_features):
+                         tokenizer):
     """
     Creating embedding matrix from glove embedding coefficients
     :param embeddings_index: embedding coefficients obtained from pre-tained file
     :param tokenizer: tokenizer created from corpus
-    :param max_features: maximum features to be kept
     :return: embedding matrix to be put into the model
     """
     # Creating summarise embedding stats
@@ -68,15 +66,13 @@ def get_embedding_matrix(embeddings_index,
     embed_size = all_embedding.shape[1]
 
     word_index = tokenizer.word_index
-    nb_words = min(max_features, len(word_index))
+    nb_words = len(word_index)
 
     # Create the embedding matrix. Start with random normal
-    embedding_matrix = np.random.normal(emb_mean, emb_std, (nb_words, embed_size))
+    embedding_matrix = np.random.normal(emb_mean, emb_std, (nb_words + 1, embed_size))  # Adding one as the tokenizer starts with 1
 
     # For each words in the corpus, if located in the embedding index, then replace
     for word, i in word_index.items():
-        if i >= max_features:
-            continue
         embedding_vector = embeddings_index.get(word)
         if embedding_vector is not None:
             embedding_matrix[i] = embedding_vector
