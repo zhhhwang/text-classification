@@ -3,12 +3,12 @@ from keras.callbacks import EarlyStopping
 from text_classification.config import constants
 
 # Data feature
-EMBEDDING_FILE = constants.EMBEDDING_FILE_DIR + 'glove.twitter.27B.100d.txt'
+EMBEDDING_FILE = constants.EMBEDDING_FILE_DIR + 'glove.twitter.27B.200d.txt'
 
 # Model Params
 BATCH_SIZE = 256
 EPOCHS = 20
-EMBED_SIZE = 100
+EMBED_SIZE = 200
 LEARNING_RATE = 0.01
 
 # Call Backs

@@ -29,7 +29,9 @@ def create_lstm_classification_model(embedding_matrix, max_features, max_length)
 
     # LSTM Model
     model.add(Bidirectional(LSTM(units=128, return_sequences=True, recurrent_dropout=0.25, dropout=0.25)))
+    model.add(Dropout(0.1))
     model.add(Bidirectional(LSTM(units=64, recurrent_dropout=0.1, dropout=0.1)))
+    model.add(Dropout(0.1))
     model.add(Dense(units=32, activation='relu'))
     model.add(Dense(5, activation='softmax'))
     model.compile(optimizer=keras.optimizers.Adam(lr=amazon_review_model_config.LEARNING_RATE),
